@@ -8,7 +8,10 @@ As examples, a single chromosome from three different organisms is used as a dem
 ## Installation
 To install this site locally run the following commands:
 
-Clone the repo and cd into it $ git clone [git@github.com:griffithlab/rnabio.org.git](https://github.com/francicco/GenomeAnnotationWorkshop2024.git)
+Clone the repo and cd into it 
+```
+git clone [git@github.com:griffithlab/rnabio.org.git](https://github.com/francicco/GenomeAnnotationWorkshop2024.git)
+```
 Install the following software and their dependencies:
 
 BRAKER2

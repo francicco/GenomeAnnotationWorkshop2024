@@ -14,12 +14,33 @@ git clone [git@github.com:griffithlab/rnabio.org.git](https://github.com/francic
 ```
 Install the following software and their dependencies:
 
-BRAKER2
-Stringtie
-Scallop
-IsoQuant
-...
-Mikado
+[STAR](https://github.com/alexdobin/STAR)
+
+[Samtools](https://github.com/samtools/samtools)
+
+[Bedtools](https://github.com/arq5x/bedtools2)
+
+[Diamond](https://github.com/bbuchfink/diamond)
+
+[Miniprot](https://github.com/lh3/miniprot)
+
+[BRAKER](https://github.com/Gaius-Augustus/BRAKER)
+
+[BUSCO](https://busco.ezlab.org/)
+
+[Stringtie](https://ccb.jhu.edu/software/stringtie/)
+
+[Scallop](https://github.com/Kingsford-Group/scallop)
+
+[IsoQuant](https://github.com/ablab/IsoQuant)
+
+[Trinity](https://github.com/trinityrnaseq/trinityrnaseq)
+
+[TransDecoder](https://github.com/TransDecoder/TransDecoder)
+
+[Portcullis](https://github.com/EI-CoreBioinformatics/portcullis)
+
+[Mikado](https://mikado.readthedocs.io/en/stable/)
 
 ## The workshop
 The workshop is divided into four section

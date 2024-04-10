@@ -42,6 +42,8 @@ Install the following software and their dependencies:
 
 [Mikado](https://mikado.readthedocs.io/en/stable/)
 
+`Miniprot2SplicedNucl.py`
+
 ## The workshop
 The workshop is divided into four section
 

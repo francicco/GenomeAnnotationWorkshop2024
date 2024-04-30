@@ -55,4 +55,4 @@ The workshop is divided into four section
 4. *Ab Initio* annotation using [Short-reads](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/ShortReadAnnotation.md) RNAseq & [Long-reads RNA-Seq](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/LongReadAnnotation.md)
 5. Metrics to evaluate annotations, [Splice-site filtering](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/5.SpliceJunctionFiltering/5.PortcullisRun.md), and [Annotation Consensus using Mikado](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/6.Consensus/ConsensusAnnotationMikado.md)
 
-## I hope this will be helpful, Have fun!
+## I hope this will be useful, Have fun!

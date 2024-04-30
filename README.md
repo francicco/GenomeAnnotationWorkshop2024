@@ -47,10 +47,10 @@ Install the following software and their dependencies:
 ## The workshop
 The workshop is divided into four section
 
-1. RNAseq mapping on the reference genome (Short-reads & Iso-Seq)
-2. Homology and evidence-based prediction of protein coding genes (PCGs) using BRAKER2
-3. *Ab Initio* annotation using Short-reads RNAseq & Iso-Seq
-4. *De Novo* annotation using Short-reads RNAseq using Trinity
-5. Metrics to evaluate annotations and Annotation Consensus using Mikado
+1. [RNAseq mapping on the reference genome (Short-reads & Iso-Seq)](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/1.Mapping/1.MappingStap.md)
+2. [Homology and evidence-based prediction of protein coding genes (PCGs) using BRAKER2](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/2.Prediction/BRAKER.md)
+3. [*De Novo* annotation using Short-reads RNAseq using Trinity](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/3.DeNovoAnnotation/DeNovoTrinity.md)
+4. *Ab Initio* annotation using [Short-reads](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/ShortReadAnnotation.md) RNAseq & [Long-reads RNA-Seq](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/LongReadAnnotation.md)
+5. Metrics to evaluate annotations, [Splice-site filtering](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/5.SpliceJunctionFiltering/5.PortcullisRun.md), and [Annotation Consensus using Mikado](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/6.Consensus/ConsensusAnnotationMikado.md)
 
 ## I hope this will be helpful, Have fun!

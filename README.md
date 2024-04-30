@@ -42,7 +42,9 @@ Install the following software and their dependencies:
 
 [Mikado](https://mikado.readthedocs.io/en/stable/)
 
-`Miniprot2SplicedNucl.py`
+[`Miniprot2SplicedNucl.py`](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/Scripts/Miniprot2SplicedNucl.py)
+
+[`Analyze_Diamond_topHit_coverage.R`](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/Scripts/Miniprot2SplicedNucl.py)
 
 ## The workshop
 The workshop is divided into four section

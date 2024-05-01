@@ -17,47 +17,47 @@ Scallop capitalizes on reads spanning more than two exons by encoding them as ph
 ## *Ab Initio* pipeline:
 In this step of the annotation pipeline, we will therefore employ both methods, which will be merged in the final step of the annotation pipeline. The idea is to capitalize of the strengths of both metodologies.
 
-1. We first run `StringTie` on the BAM file previously generate:
+### 1. We first run `StringTie` on the BAM file previously generate:
 ```bash
 stringtie $SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam \
   -o $SPECIES.RNA.$CHRNAME.stringtie.out.gtf -p $THREADS -m 1000 $STRAND
 ```
 *NOTE: because we have a gene prediction annotation we could also use it in the mapping step generating a **new** BAM file and use it which will likely have more reads mapped on spice-sites*
 
-Now we can convert the resulted `gtf` file produced by `StringTie` into a `bed12` file format...
+### Now we can convert the resulted `gtf` file produced by `StringTie` into a `bed12` file format...
 ```bash
 mikado util convert -if gtf -of bed12 $SPECIES.RNA.$CHRNAME.stringtie.out.gtf | sed 's/;coding=False//' | sed 's/ID=//' > $SPECIES.RNA.$CHRNAME.stringtie.out.bed
 ```
 
-...that will be used to extract the corresponding nucleotide sequences for each transcript.
+### ...that will be used to extract the corresponding nucleotide sequences for each transcript.
 ```bash
 bedtools getfasta -nameOnly -fo $SPECIES.RNA.$CHRNAME.stringtie.out.fasta -fi $DATADIR/$SPECIES.$CHRNAME.fasta -bed $SPECIES.RNA.$CHRNAME.stringtie.out.bed
 ```
 
-And we can use `busco` to try and infer how complete the annotation would be.
+### And we can use `busco` to try and infer how complete the annotation would be.
 ```bash
 busco -f -m transcriptome -i $SPECIES.RNA.$CHRNAME.stringtie.out.fasta -f -o $SPECIES.RNA.$CHRNAME.stringtie.Busco.$BUSCODB -l $BUSCODIR/$BUSCODB --cpu 20
 ```
 
-We can also `blastx` the transcripts...
+### We can also `blastx` the transcripts...
 ```bash
 diamond blastx  --ultra-sensitive --max-target-seqs 1 --threads 20 --query $SPECIES.RNA.$CHRNAME.stringtie.out.fasta --outfmt 6 --db ${SWISSPROTDB} \
 	--evalue 1e-5 --out $SPECIES.RNA.$CHRNAME.stringtie.out.outfmt6
 ```
 
-...to check the completeness of the transcripts, just like we did during the *de novo* step.
+### ...to check the completeness of the transcripts, just like we did during the *de novo* step.
 ```bash
 $TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.stringtie.out.outfmt6 $SPECIES.RNA.$CHRNAME.stringtie.out.fasta ${SWISSPROTDB}.fasta
 grep -v '^#' $SPECIES.RNA.$CHRNAME.stringtie.out.outfmt6.w_pct_hit_length | sed 's/^/Stringtie\t/' > $SPECIES.RNA.$CHRNAME.stringtie.out.outfmt6.w_pct_hit_length.tsv
 ```
 
-2. Another strategy would be add an annotation, *i.e.*: the `BRAKER` one, to guide the transcript reconstruction. 
+### 2. Another strategy would be add an annotation, *i.e.*: the `BRAKER` one, to guide the transcript reconstruction. 
 ```bash
 stringtie $SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam \
     -o $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.gtf -p $THREADS -m 1000 $STRAND -G $BRAKERGTF
 ```
 
-We can now follow the same steps to check the quality of this strategy.
+### We can now follow the same steps to check the quality of this strategy.
 ```bash
 mikado util convert -if gtf -of bed12 $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.gtf | sed 's/;coding=False//' | sed 's/ID=//' > $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.bed
 ```
@@ -80,7 +80,7 @@ $TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.st
 grep -v '^#' $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.outfmt6.w_pct_hit_length | sed 's/^/Stringtie+BRAKER\t/' > $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.outfmt6.w_pct_hit_length.tsv
 ```
 
-3. We can repeat the same steps with `Scallp`.
+### 3. We can repeat the same steps with `Scallp`.
 ```bash
 scallop -i $SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam -o $SPECIES.RNA.$CHRNAME.scallop.out.gtf --library_type $LIBTYPE > $SPECIES.RNA.$CHRNAME.scallop.log
 ```
@@ -107,13 +107,13 @@ $TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.sc
 grep -v '^#' $SPECIES.RNA.$CHRNAME.scallop.out.outfmt6.w_pct_hit_length | sed 's/^/Scallop\t/' > $SPECIES.RNA.$CHRNAME.scallop.out.outfmt6.w_pct_hit_length.tsv
 ```
 
-Finally we can concatenate all these stats obtained for each strategy and look at the results.
+### Finally we can concatenate all these stats obtained for each strategy and look at the results.
 ```bash
 head -n1 $DATADIR/$SPECIES.$CHRNAME.proteins.*.outfmt6.w_pct_hit_length > $SPECIES.AbInitioVsRef.w_pct_hit_length.tsv
 cat $SPECIES.RNA.$CHRNAME.stringtie.out.outfmt6.w_pct_hit_length.tsv $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.outfmt6.w_pct_hit_length.tsv $SPECIES.RNA.$CHRNAME.scallop.out.outfmt6.w_pct_hit_length.tsv >> $SPECIES.AbInitioVsRef.w_pct_hit_length.tsv
 ```
 
-We provide you with a `R` script: `Analyze_Diamond_topHit_coverage.R`, located in the `Scripts` folder, to plot the data.
+### We provide you with a `R` script: `Analyze_Diamond_topHit_coverage.R`, located in the `Scripts` folder, to plot the data.
 ```bash
 Rscript Analyze_Diamond_topHit_coverage.R $SPECIES.AbInitioVsRef.w_pct_hit_length.tsv $SPECIES.AbInitioVsRef.w_pct_hit_length.png
 ```

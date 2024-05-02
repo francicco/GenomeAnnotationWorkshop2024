@@ -80,7 +80,7 @@ $TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.st
 grep -v '^#' $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.outfmt6.w_pct_hit_length | sed 's/^/Stringtie+BRAKER\t/' > $SPECIES.RNA.$CHRNAME.stringtie+BRAKER.out.outfmt6.w_pct_hit_length.tsv
 ```
 
-### 3. We can repeat the same steps with `Scallp`.
+### 3. We can repeat the same steps with `Scallop`.
 ```bash
 scallop -i $SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam -o $SPECIES.RNA.$CHRNAME.scallop.out.gtf --library_type $LIBTYPE > $SPECIES.RNA.$CHRNAME.scallop.log
 ```

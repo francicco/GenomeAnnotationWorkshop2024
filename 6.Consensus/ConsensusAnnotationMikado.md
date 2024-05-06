@@ -70,58 +70,80 @@ The output is a configuration file: `configuration.yaml`, which will contain all
 mikado prepare --json-conf configuration.yaml --procs 10
 ```
 
-
+This step produces a `gtf` (`mikado_prepared.gtf`) and a `fasta` file (`mikado_prepared.fasta`), and we can use the fasta to annotate the ORFs within each transcript.
+For that we can use `TransDecoder`.
 ```bash
-TransDecoder.LongOrfs -S -t mikado_prepared.fasta
+TransDecoder.LongOrfs -t mikado_prepared.fasta
 ```
 
+On the predicted ORFs we can run `diamond blastp` to check for homology. This is another source of info that `TransDecoder` will use to assign the best ORF per transcript.
 ```bash 
 diamond blastp --ultra-sensitive --threads 30 --db ${SWISSPROTDB} --out mikado_prepared.fasta.transdecoder_dir/longest_orfs.Diamond.outfmt6.out --outfmt 6 \
 	--evalue 1e-5 --max-target-seqs 1 --query mikado_prepared.fasta.transdecoder_dir/longest_orfs.pep
 ```
+*Note: `TransDecoder` can also make use of PFAM, using `hmmscan`, but because this is a relatively time-consuming step, which for time constraints we do not run here, we advice its use*
 
-```bash
-diamond blastx --ultra-sensitive --threads 30 --db ${SWISSPROTDB} --out mikado.diamond.xml --outfmt 5 --evalue 1e-5 --query mikado_prepared.fasta
-```
-
-```bash
-gzip mikado.diamond.xml
-```
-
+Now let's give to `TransDecoder` all the info we have!
 ```bash
 TransDecoder.Predict -T 1000 -t mikado_prepared.fasta --retain_blastp_hits mikado_prepared.fasta.transdecoder_dir/longest_orfs.Diamond.outfmt6.out -v
 ```
 
+`Mikado` will also accept a full `blastx` search in a different format in `xml` format (`--outfmt 5`). `Diamond` is relatively quick, so... let's give it a go!
+```bash
+diamond blastx --ultra-sensitive --threads 30 --db ${SWISSPROTDB} --out mikado.diamond.xml --outfmt 5 --evalue 1e-5 --query mikado_prepared.fasta
+gzip mikado.diamond.xml
+```
+
+## 3. Finally, `pick` will integrate the data with the positional and structural data present in the `GTF` file to select the best transcript models.
+But before `pick`, let's covert all into a `SQLite` database...
 ```bash
 mikado serialise -p 30 --json-conf configuration.yaml --xml mikado.blast.xml.gz --orfs mikado_prepared.fasta.transdecoder.bed
 ```
 
+...and run `pick`!
+Wait! `pick` has five different modes: `nosplit`, `stringent`, `lenient`, `permissive`, and `split`.
+- `nosplit`: keep the transcripts whole.
+- `stringent`: split multi-orf transcripts if two consecutive ORFs have both BLAST hits and none of those hits is against the same target.
+- `lenient`: split multi-orf transcripts as in stringent, and additionally, also when either of the ORFs lacks a BLAST hit (but not both).
+- `permissive`: like lenient, but also split when both ORFs lack BLAST hits.
+- `split`: split multi-orf transcripts regardless of what BLAST data is available.
+
+Now *pick* the one you like... or check for differences!
 ```bash
-mikado pick --mode split --prefix $SPECIES -p 20 --json-conf configuration.yaml --subloci-out mikado.subloci.out.gff3 --output-dir $SPECIES.Mikado.split
+MODE=split
+mikado pick --mode $MODE --prefix $SPECIES -p 20 --json-conf configuration.yaml --subloci-out mikado.subloci.out.gff3 --output-dir $SPECIES.Mikado.split
 ```
 
+## Now that you concluded the pipeline you can have a look at the results
 ```bash
-cd $SPECIES.Mikado.split 
+cd $SPECIES.Mikado.$MODE 
 ```
 
+Do e bit of cleaning of the resulted `gff3`...
 ```bash
 grep -P -v "Mikado_loci\tsuperlocus" mikado.loci.gff3 | grep -v '###' > tmp
 ```
 
+Extract the amino-acid sequences:
 ```bash
 gffread tmp -g $CHR -y mikado.loci.aa.fasta
 ```
 
+And run `BUSCO`...
 ```bash
 busco -f -i mikado.loci.aa.fasta --cpu 30 -m prot -l $BUSCODIR/$BUSCODB --out run_mikado.loci.aa.$BUSCODB
 cat run_mikado.loci.aa.$BUSCODB/short_summary.*.txt
 ```
 
+and compare it with our reference annotation, if available.
 ```bash
 mikado compare -r $ANNREF -p mikado.loci.gff3 -o MikadoVsRef 2> MikadoVsRef.errors.log
 cat MikadoVsRef.stats
 ```
 
+`Mikado` has also various utilities such as `stats`. You can use it to check stats in your annotations:
 ```bash
 mikado util stats mikado.loci.gff3
 ```
+
+## How does your annotation look? Can you improve it?

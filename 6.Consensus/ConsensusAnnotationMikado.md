@@ -1,3 +1,7 @@
+# Merge all annotations into one.
+
+[`Mikado`](https://mikado.readthedocs.io/en/stable/)
+
 
 ```bash
 mikado util convert -if bed12 -of gff3 $SPECIES.RNA.$CHRNAME.isoquant.out.bed > $SPECIES.RNA.$CHRNAME.isoquant.out.gff3

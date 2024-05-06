@@ -44,6 +44,8 @@ Install the following software and their dependencies:
 
 [`Miniprot2SplicedNucl.py`](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/Scripts/Miniprot2SplicedNucl.py)
 
+[`IsoQuantGTF2BED12v0.1.py`](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/Scripts/IsoQuantGTF2BED12v0.1.py)
+
 [`Analyze_Diamond_topHit_coverage.R`](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/Scripts/Miniprot2SplicedNucl.py)
 
 ## The workshop

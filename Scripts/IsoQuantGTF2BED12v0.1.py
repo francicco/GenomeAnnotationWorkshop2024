@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import optparse
 import re
@@ -17,7 +17,7 @@ parser.add_option('-g', '--GTF', dest='gtf', help='GTF file from Exonerate. Mand
 mandatories = ['gtf']
 for m in mandatories:
         if not opts.__dict__[m]:
-                print "\nWARNING! One or more options not specified\n"
+                print("\nWARNING! One or more options not specified\n")
                 parser.print_help()
                 exit(-1)
 
@@ -120,5 +120,5 @@ for scf in sorted(gtf_scf.keys()):
 		if strand == '-':
 			starts.reverse()
 			lengths.reverse()
-		print '%s\t%s\t%s\t%s' % (transcript_info,nexons,','.join(lengths),','.join(starts))
+		print('%s\t%s\t%s\t%s' % (transcript_info,nexons,','.join(lengths),','.join(starts)))
 

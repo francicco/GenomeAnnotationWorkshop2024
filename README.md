@@ -52,7 +52,7 @@ The workshop is divided into four section
 1. [RNAseq mapping on the reference genome (Short-reads & Iso-Seq)](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/1.Mapping/1.MappingStap.md)
 2. [Homology and evidence-based prediction of protein coding genes (PCGs) using BRAKER2](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/2.Prediction/BRAKER.md)
 3. [*De Novo* annotation using Short-reads RNAseq using Trinity](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/3.DeNovoAnnotation/DeNovoTrinity.md)
-4. *Ab Initio* annotation using [Short-reads](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/ShortReadAnnotation.md) RNAseq & [Long-reads RNA-Seq](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/LongReadAnnotation.md)
+4. *Ab Initio* annotation using [Short-reads](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/1.ShortReadAnnotation.md) RNAseq & [Long-reads RNA-Seq](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/4.AbInitioAnnotation/2.LongReadAnnotation.md)
 5. Metrics to evaluate annotations, [Splice-site filtering](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/5.SpliceJunctionFiltering/5.PortcullisRun.md), and [Annotation Consensus using Mikado](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/6.Consensus/ConsensusAnnotationMikado.md)
 
 But first, you need to [set up your environment](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/0.VariableSetting.md)!!!

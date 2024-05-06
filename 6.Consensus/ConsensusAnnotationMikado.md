@@ -1,6 +1,8 @@
 # Merge all annotations into one.
 There are multiple both empirical and intuitive evidence as to why integrating multiple annotation protocols enhances the outcome of genome annotation.
 
+<img width="1282" alt="AnnPipeLineCicconardiEtAl" src="https://github.com/francicco/GenomeAnnotationWorkshop2024/assets/9006870/3c1b0332-7644-4a95-b367-9ecc1a96fb6a">
+
 1. **Redundancy Reduction:** Each annotation protocol may have its own strengths and weaknesses, leading to both false positives and false negatives. Integrating multiple protocols allows researchers to cross-validate annotations and reduce the likelihood of errors. Consistent annotations across multiple protocols increase confidence in the accuracy of the final annotation.
 
 2. **Resolution of Ambiguities:** Some regions of the genome may be challenging to annotate due to complex genomic structures, repetitive sequences, or ambiguities in the data. Integrating multiple annotation protocols can help resolve these ambiguities by providing complementary information from different experimental approaches or computational methods.
@@ -62,9 +64,12 @@ mikado configure --list Mikado.conf --scoring insects.yaml --reference $CHR --co
 ```
 
 The output is a configuration file: `configuration.yaml`, which will contain all the info for `Mikado`.
+
+## 2. The subsequent step involves running `prepare` to create a sorted, non-redundant `GTF` with all the input annotations.
 ```bash
 mikado prepare --json-conf configuration.yaml --procs 10
 ```
+
 
 ```bash
 TransDecoder.LongOrfs -S -t mikado_prepared.fasta

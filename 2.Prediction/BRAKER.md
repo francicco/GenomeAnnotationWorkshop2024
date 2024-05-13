@@ -97,7 +97,7 @@ diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads 20 --query brake
 
 We can then compute the X% length against the best hits. We can also use the final tsv file to make a plot of the distribution on the frequency of X%.
 ```bash
-$TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl braker_utr.aa.out.outfmt6 braker_utr.aa.asta ${SWISSPROTDB}.fasta
+analyze_blastPlus_topHit_coverage.pl braker_utr.aa.out.outfmt6 braker_utr.aa.asta ${SWISSPROTDB}.fasta
 sed 's/^/Blaker\t/' > braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
 ```
 

@@ -59,7 +59,7 @@ braker.pl --useexisting --UTR=on --cores 30 \
   --bam=$SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam --AUGUSTUS_ab_initio -grass --verbosity=4 
 ```
 
-Now the run has finished you can check the quality of it, for example asking if enough core genes (`BUSCO`) have been predicted and if there's room for improvement.
+### Now the run has finished you can check the quality of it, for example asking if enough core genes (`BUSCO`) have been predicted and if there's room for improvement.
 Running `BUSCO` on the genome AND on the annotation can give you an idea how efficient the annotation method you're using is performing. In theory you want to approach the values found with `BUSCO -m genome`
 
 Now extract amino-acid sequences from the `BRAKER` annotation:
@@ -70,6 +70,35 @@ gffread $BRAKERGTF -g $CHR -y braker_utr.aa.fasta
 ... and run `BUSCO -m protein`:
 ```bash
 busco -f -i braker_utr.aa.fasta --cpu 30 -m prot -l $BUSCODIR/$BUSCODB --out run_braker_utr.aa.$BUSCODB 
+```
+
+### Let's have a look at the fragmentation of the genes! One way to do it would be to blast our set of proteins to a reference DB and check the distribution of alignment. For this we can you uniprot. If you haven't done it already you can download the fasta file:
+```bash
+wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+```
+
+Move `uniprot_sprot.fasta.gz` to your `$DATADIR` and unpack the `gz` file:
+```bash
+cp uniprot_sprot.fasta.gz $DATADIR
+cd $DATADIR
+gunzip uniprot_sprot.fasta.gz
+```
+
+Now we have to build the index for `diamond` using the subcommand `makedb`.
+```bash
+diamond makedb --in uniprot_sprot.fasta --db uniprot_sprot
+```
+
+Now we are ready to `blastp` our proteome.
+```bash
+diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads 20 --query braker_utr.aa.fasta --outfmt 6 --db ${SWISSPROTDB} \
+	--evalue 1e-5 --out braker_utr.aa.out.outfmt6
+```
+
+We can then compute the X% length against the best hits. We can also use the final tsv file to make a plot of the distribution on the frequency of X%.
+```bash
+$TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl braker_utr.aa.out.outfmt6 braker_utr.aa.asta ${SWISSPROTDB}.fasta
+sed 's/^/Blaker\t/' > braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
 ```
 
 In case you already have a reference annotation you can compare it with the `BRAKER` output, to see how the analysis performed.

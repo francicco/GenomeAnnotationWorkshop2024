@@ -42,7 +42,7 @@ Do you know why we're using nt instead of aa?
 
 Now we can use `BUSCO -m transcriptome` to check the completeness to check how complete is annotation might be. What would you expect?
 ```bash
-busco -f -m transcriptome -i $SPECIES.RNA.$CHRNAME.trinity.out.fasta -f -o $SPECIES.RNA.$CHRNAME.trinity.Busco.$BUSCODB -l $BUSCODIR/$BUSCODB --cpu 20
+busco -f -m transcriptome -i $SPECIES.RNA.$CHRNAME.trinity.out.fasta -f -o $SPECIES.RNA.$CHRNAME.trinity.Busco.$BUSCODB -l $BUSCODIR/$BUSCODB --cpu $THREADS
 ```
 
 We also want to look at other metrics such as the representation of full-length reconstructed protein-coding genes. This can be done by searching the annotated transcripts against a database of known protein sequences.
@@ -50,7 +50,7 @@ you can find more of this explanation [here](https://github.com/trinityrnaseq/tr
 
 Since we have nt we can use `diamond bastx` to translate and map to proteins, providing a protein database indexed with `diamond makedb`.
 ```bash
-diamond blastx  --ultra-sensitive --max-target-seqs 1 --threads 20 --query $SPECIES.RNA.$CHRNAME.trinity.out.fasta --outfmt 6 --db ${SWISSPROTDB} \
+diamond blastx  --ultra-sensitive --max-target-seqs 1 --threads $THREADS --query $SPECIES.RNA.$CHRNAME.trinity.out.fasta --outfmt 6 --db ${SWISSPROTDB} \
 	--evalue 1e-5 --out $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6
 ```
 

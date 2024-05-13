@@ -13,7 +13,7 @@ The mapper is very fast and can provide multiple types of output. Execute `minip
 
 For example the parameter `-G` controls the expected size of the longest introns, you need to adjust accordingly to your genome. One way to check the results is to load the output on `IGV` and check in the different maps have too much overlap or not enough coding exons.
 ```bash
-miniprot --aln --gff --trans -t 20 --trans -G 50000 $CHR $SWISSPROTDB.fasta > $SPECIES.MiniProt.gff
+miniprot --aln --gff --trans -t $THREADS --trans -G 50000 $CHR $SWISSPROTDB.fasta > $SPECIES.MiniProt.gff
 ```
 
 Once you are satisfied with your mapping you can start to convert the mapping into a `gff` format file and use it as input in `BRAKER`.
@@ -26,7 +26,7 @@ Miniprot2SplicedNucl.py -g $SPECIES.MiniProt.gff > $SPECIES.MiniProt.nt.fasta
 
 Now run `minimap2`:
 ```bash
-minimap2 -t 40 -ax splice:hq $CHR $SPECIES.MiniProt.nt.fasta > $SPECIES.MiniProt.nt.sam
+minimap2 -t $THREADS -ax splice:hq $CHR $SPECIES.MiniProt.nt.fasta > $SPECIES.MiniProt.nt.sam
 ```
 
 Convert the `sam` into a `psl`:
@@ -52,7 +52,7 @@ You can also manually link these paths to `BRAKER` using specific flags like `--
 
 Now run `BRAKER`:
 ```bash
-braker.pl --useexisting --UTR=on --cores 30 \
+braker.pl --useexisting --UTR=on --cores $THREADS \
   --workingdir=. --alternatives-from-evidence=true --crf \
   --nocleanup --species=${SPECIES}_$CHRNAME --UTR=on --softmasking -grass   \
   --genome=$CHR --gff3 --hints=$SPECIES.MiniProt.hints.gff \
@@ -69,7 +69,7 @@ gffread $BRAKERGTF -g $CHR -y braker_utr.aa.fasta
 
 ... and run `BUSCO -m protein`:
 ```bash
-busco -f -i braker_utr.aa.fasta --cpu 30 -m prot -l $BUSCODIR/$BUSCODB --out run_braker_utr.aa.$BUSCODB 
+busco -f -i braker_utr.aa.fasta --cpu $THREADS -m prot -l $BUSCODIR/$BUSCODB --out run_braker_utr.aa.$BUSCODB 
 ```
 
 ### Let's have a look at the fragmentation of the genes! One way to do it would be to blast our set of proteins to a reference DB and check the distribution of alignment. For this we can you uniprot. If you haven't done it already you can download the fasta file:
@@ -91,7 +91,7 @@ diamond makedb --in uniprot_sprot.fasta --db uniprot_sprot
 
 Now we are ready to `blastp` our proteome.
 ```bash
-diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads 20 --query braker_utr.aa.fasta --outfmt 6 --db ${SWISSPROTDB} \
+diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads $THREADS --query braker_utr.aa.fasta --outfmt 6 --db ${SWISSPROTDB} \
 	--evalue 1e-5 --out braker_utr.aa.out.outfmt6
 ```
 

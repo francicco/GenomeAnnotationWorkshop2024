@@ -56,7 +56,7 @@ diamond blastx  --ultra-sensitive --max-target-seqs 1 --threads 20 --query $SPEC
 
 We can then compute the X% length against the best hits. We can also use the final tsv file to make a plot of the distribution on the frequency of X%.
 ```bash
-$TRINITY_HOME/util/analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6 $SPECIES.RNA.$CHRNAME.trinity.out.fasta ${SWISSPROTDB}.fasta
+analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6 $SPECIES.RNA.$CHRNAME.trinity.out.fasta ${SWISSPROTDB}.fasta
 grep -v '^#' $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length | sed 's/^/Trinity\t/' > $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length.tsv
 ```
 

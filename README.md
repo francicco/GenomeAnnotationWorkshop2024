@@ -26,9 +26,5 @@ The workshop is divided into four section
 5. Metrics to evaluate annotations, [Splice-site filtering](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/5.SpliceJunctionFiltering/5.PortcullisRun.md), and [Annotation Consensus using Mikado](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/6.Consensus/ConsensusAnnotationMikado.md)
 
 All data is available at this [link](https://drive.google.com/drive/folders/1IreMRHaOa1kvOomyjoEm8xFw1fmOR-oK?usp=drive_link), but don't forget to [set up your environment](https://github.com/francicco/GenomeAnnotationWorkshop2024/blob/main/0.VariableSetting.md)!!!
-you can download it with wget like this:
-```bash
-wget -O GenomeAnnWorkshopDATA.zip --no-check-certificate -r 'https://drive.google.com/file/d/1T_lbDTmVTc539jrx7pZZu1tTcvoNPC9x/view?usp=drive_link'
-```
 
 ## I hope this will be useful, Have fun!

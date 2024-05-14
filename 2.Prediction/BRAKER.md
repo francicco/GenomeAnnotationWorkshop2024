@@ -92,6 +92,8 @@ diamond makedb --in uniprot_sprot.fasta --db uniprot_sprot
 
 Now we are ready to `blastp` our proteome.
 ```bash
+sed 's/\.$//' braker_utr.aa.fasta > tmp.aa.fasta 
+mv tmp.aa.fasta braker_utr.aa.fasta
 diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads $THREADS --query braker_utr.aa.fasta --outfmt 6 --db ${SWISSPROTDB} \
 	--evalue 1e-5 --out braker_utr.aa.out.outfmt6
 ```
@@ -99,7 +101,7 @@ diamond blastp  --ultra-sensitive --max-target-seqs 1 --threads $THREADS --query
 We can then compute the X% length against the best hits. We can also use the final tsv file to make a plot of the distribution on the frequency of X%.
 ```bash
 analyze_blastPlus_topHit_coverage.pl braker_utr.aa.out.outfmt6 braker_utr.aa.asta ${SWISSPROTDB}.fasta
-sed 's/^/Braker\t/' > braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
+sed 's/^/Braker\t/' braker_utr.aa.out.outfmt6.w_pct_hit_length > braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
 ```
 
 In case you already have a reference annotation you can compare it with the `BRAKER` output, to see how the analysis performed.

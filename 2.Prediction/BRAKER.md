@@ -60,7 +60,7 @@ braker.pl --UTR=on --threads $THREADS \
   --bam=$SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam 
 ```
 
-### Now the run has finished you can check the quality of it, for example asking if enough core genes (`BUSCO`) have been predicted and if there's room for improvement.
+Now the run has finished you can check the quality of it, for example asking if enough core genes (`BUSCO`) have been predicted and if there's room for improvement.
 Running `BUSCO` on the genome AND on the annotation can give you an idea how efficient the annotation method you're using is performing. In theory you want to approach the values found with `BUSCO -m genome`
 
 Now extract amino-acid sequences from the `BRAKER` annotation:
@@ -73,7 +73,7 @@ gffread $BRAKERGTF -g $CHR -y braker_utr.aa.fasta
 busco -f -i braker_utr.aa.fasta --cpu $THREADS -m prot -l $BUSCODIR/$BUSCODB --out run_braker_utr.aa.$BUSCODB 
 ```
 
-### Let's have a look at the fragmentation of the genes! One way to do it would be to blast our set of proteins to a reference DB and check the distribution of alignment. For this we can you uniprot. If you haven't done it already you can download the fasta file:
+Let's have a look at the fragmentation of the genes! One way to do it would be to blast our set of proteins to a reference DB and check the distribution of alignment. For this we can you uniprot. If you haven't done it already you can download the fasta file:
 ```bash
 wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
 ```

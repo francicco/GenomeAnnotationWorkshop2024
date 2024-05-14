@@ -115,7 +115,8 @@ cat BrakerVsRef.stats
 
 `Mikado util` instead extracts multiple pieces of information from your annotation. Execute it a have a look.
 ```bash
-mikado util stats $BRAKERGTF
+mikado util stats $BRAKERGTF > Braker_UTR.stats
+cat Braker_UTR.stats
 ```
 
 Well done, the `BRAKER` step is complete!!!

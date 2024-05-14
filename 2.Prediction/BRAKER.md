@@ -52,11 +52,12 @@ You can also manually link these paths to `BRAKER` using specific flags like `--
 
 Now run `BRAKER`:
 ```bash
-braker.pl --useexisting --UTR=on --cores $THREADS \
+braker.pl --UTR=on --threads $THREADS \
   --workingdir=. --alternatives-from-evidence=true --crf \
-  --nocleanup --species=${SPECIES}_$CHRNAME --UTR=on --softmasking -grass   \
+  --nocleanup --species=${SPECIES}_$CHRNAME --softmasking \
   --genome=$CHR --gff3 --hints=$SPECIES.MiniProt.hints.gff \
-  --bam=$SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam --AUGUSTUS_ab_initio -grass --verbosity=4 
+  --AUGUSTUS_ab_initio -grass --verbosity=4 \
+  --bam=$SPECIES.RNA.$CHRNAME.Aligned.sortedByCoord.out.bam 
 ```
 
 ### Now the run has finished you can check the quality of it, for example asking if enough core genes (`BUSCO`) have been predicted and if there's room for improvement.

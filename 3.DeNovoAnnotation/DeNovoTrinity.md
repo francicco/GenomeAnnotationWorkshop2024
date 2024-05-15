@@ -23,7 +23,7 @@ done
 And subsequently run `Trinity`. This step will require some time, I provided you the final result using a standard run.
 Note: if you have multiple libraries from multiple tissues and experiment you can combine all of them or run them separately. But in case you have very high sequencing depth you can tell `Trinity`, or use third part software (*e.g.*: [BBmap](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/)), to [*in silico* normalise](https://github.com/trinityrnaseq/trinityrnaseq/wiki/Trinity-Insilico-Normalization) the data, which means removing reads from highly expressed genes, to make the computation more affordable in terms of RAM and CPU load.
 ```bash
-Trinity --max_memory 150G --seqType fq --left $SRA1 --right $SRA2 --CPU $THREADS --output $SPECIES.trinity --full_cleanup --bflyCPU $THREADS"
+Trinity --max_memory 150G --seqType fq --left $SRA1 --right $SRA2 --CPU $THREADS --output $SPECIES.trinity --full_cleanup --bflyCPU $THREADS
 ```
 
 

@@ -102,6 +102,7 @@ We can then compute the X% length against the best hits. We can also use the fin
 ```bash
 analyze_blastPlus_topHit_coverage.pl braker_utr.aa.out.outfmt6 braker_utr.aa.asta ${SWISSPROTDB}.fasta
 sed 's/^/Braker\t/' braker_utr.aa.out.outfmt6.w_pct_hit_length > braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
+sed -i '1s/^Braker\t#/#Annotation\t/' braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv
 ```
 
 In case you already have a reference annotation you can compare it with the `BRAKER` output, to see how the analysis performed.

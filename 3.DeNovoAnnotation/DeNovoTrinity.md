@@ -60,6 +60,17 @@ analyze_blastPlus_topHit_coverage.pl $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6 $
 grep -v '^#' $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length | sed 's/^/Trinity\t/' > $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length.tsv
 ```
 
+You can also combine this table with the one from BRAKER
+```bash
+cat braker_utr.aa.out.outfmt6.w_pct_hit_length.tsv > AllAnnotations.aa.out.outfmt6.w_pct_hit_length.tsv
+cat $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length.tsv >> AllAnnotations.aa.out.outfmt6.w_pct_hit_length.tsv
+```
+
+And plot them together
+```bash
+Rscript Analyze_Diamond_topHit_coverage.R AllAnnotations.aa.out.outfmt6.w_pct_hit_length.tsv AllAnnotations.aa.out.outfmt6.w_pct_hit_length.png
+```
+
 `Mikado compare` can be used to check differences with the previous `BRAKER` predicion 
 ```bash
 mikado compare -r $BRAKERGTF -p $SPECIES.minimap2.Trinity.bed -o TrinityVsBRAKER

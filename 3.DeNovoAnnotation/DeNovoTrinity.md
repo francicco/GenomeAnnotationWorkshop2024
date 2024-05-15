@@ -68,7 +68,7 @@ cat $SPECIES.RNA.$CHRNAME.trinity.out.outfmt6.w_pct_hit_length.tsv >> AllAnnotat
 
 And plot them together
 ```bash
-Rscript Analyze_Diamond_topHit_coverage.R AllAnnotations.aa.out.outfmt6.w_pct_hit_length.tsv AllAnnotations.aa.out.outfmt6.w_pct_hit_length.png
+Analyze_Diamond_topHit_coverage.R AllAnnotations.aa.out.outfmt6.w_pct_hit_length.tsv AllAnnotations.aa.out.outfmt6.w_pct_hit_length.png
 ```
 
 `Mikado compare` can be used to check differences with the previous `BRAKER` predicion 
